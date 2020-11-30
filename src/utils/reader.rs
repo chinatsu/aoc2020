@@ -18,7 +18,7 @@ macro_rules! csv_from {
             .unwrap()
             .trim()
             .split(",")
-            .map(|val| val.parse::<$type>().unwrap())
+            .map(|val| val.trim().parse::<$type>().unwrap())
             .collect::<Vec<$type>>()
         }
 }

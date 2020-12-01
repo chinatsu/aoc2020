@@ -32,20 +32,20 @@ fn solve_day01_2(entries: Vec<u64>) -> Option<u64> {
 
 pub fn day01() -> String {
     let entries = lines_from!("01", u64);
-    let solution = match solve_day01_1(entries) {
-        Some(answer) => format!("{}", answer),
+    let answer = match solve_day01_1(entries) {
+        Some(solution) => format!("{}", solution),
         None => thats_weird()
     };
-    format!("Day 1-1:  {}", solution)
+    format!("Day 1-1:  {}", answer)
 }
 
 pub fn day01_part2() -> String {
     let entries = lines_from!("01", u64);
-    let solution = match solve_day01_2(entries) {
-        Some(answer) => format!("{}", answer),
+    let answer = match solve_day01_2(entries) {
+        Some(solution) => format!("{}", solution),
         None => thats_weird()
     };
-    format!("Day 1-2:  {}", solution)
+    format!("Day 1-2:  {}", answer)
 
 }
 

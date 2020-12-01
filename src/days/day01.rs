@@ -1,15 +1,17 @@
 use crate::utils::thats_weird;
-use std::collections::HashSet;
 
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
-    for (i1, x) in entries.iter().enumerate() {
-        for (i2, y) in entries.iter().enumerate() {
-            if i1 == i2 {
-                continue
-            }
-            if x + y == 2020 {
-                return Some(x * y)
-            }
+    entries.sort_unstable();
+    let mut l = 0;
+    let mut r = entries.len() - 1;
+    while l < r {
+        let sum = entries[l] + entries[r];
+        if sum > 2020 {
+            r -= 1;
+        } else if sum < 2020 {
+            l += 1;
+        } else {
+            return Some(entries[l] * entries[r])
         }
     }
     None

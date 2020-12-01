@@ -6,8 +6,8 @@ fn solve_day01_1(input: Vec<i32>) -> Option<i32> {
     for (i, x) in entries.iter().enumerate() {
         let mut relevant_entries = entries.clone();
         relevant_entries.remove(i);
-        if relevant_entries.contains(&(2020-x)) {
-            return Some(x * (2020-x))
+        if relevant_entries.contains(&(2020 - x)) {
+            return Some(x * (2020 - x))
         }
     }
     None
@@ -29,8 +29,8 @@ fn solve_day01_2(input: Vec<i32>) -> Option<i32> {
                 relevant_entries.remove(i2);
                 relevant_entries.remove(i1);
             }
-            if relevant_entries.contains(&(2020-x-y)) {
-                return Some(x * y * &(2020-x-y))
+            if relevant_entries.contains(&(2020 - x - y)) {
+                return Some(x * y * (2020 - x - y))
             }
         }
     }

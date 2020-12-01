@@ -35,8 +35,7 @@ fn solve_day01_2(entries: &mut Vec<i32>) -> Option<i32> {
     None
 }
 
-pub fn day01_1(sorting: Sorting) -> String {
-    let mut entries = lines_from!("01", i32);
+pub fn day01_1(mut entries: &mut Vec<i32>, sorting: Sorting) -> String {
     let answer = match sorting {
         Sorting::Unsorted => match solve_day01_1(&mut entries) {
             Some(solution) => format!("{}", solution),
@@ -60,8 +59,7 @@ pub fn day01_1(sorting: Sorting) -> String {
     format!("Day 1-1:  {}", answer)
 }
 
-pub fn day01_2(sorting: Sorting) -> String {
-    let mut entries = lines_from!("01", i32);
+pub fn day01_2(mut entries: &mut Vec<i32>, sorting: Sorting) -> String {
     let answer = match sorting {
         Sorting::Unsorted => match solve_day01_2(&mut entries) {
             Some(solution) => format!("{}", solution),

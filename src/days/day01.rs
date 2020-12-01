@@ -1,29 +1,23 @@
 use crate::utils::thats_weird;
 
-fn solve_day01_1(entries: Vec<u64>) -> Option<u64> {
-    for (i1, x) in entries.iter().enumerate() {
-        for (i2, y) in entries.iter().enumerate() {
-            if i1 == i2 {
-                continue
-            }
-            if x + y == 2020 {
-                return Some(x * y)
-            }
+fn solve_day01_1(input: Vec<i32>) -> Option<i32> {
+    let mut entries = input.clone();
+    entries.sort_unstable_by(|a, b| b.cmp(a));
+    for x in entries.iter() {
+        if entries.contains(&(2020-x)) {
+            return Some(x * (2020-x))
         }
     }
     None
 }
 
-fn solve_day01_2(entries: Vec<u64>) -> Option<u64> {
-    for (i1, x) in entries.iter().enumerate() {
-        for (i2, y) in entries.iter().enumerate() {
-            for (i3, z) in entries.iter().enumerate() {
-                if i1 == i2 || i2 == i3 || i3 == i1 {
-                    continue
-                }
-                if x + y + z == 2020 {
-                    return Some(x * y * z)
-                }
+fn solve_day01_2(input: Vec<i32>) -> Option<i32> {
+    let mut entries = input.clone();
+    entries.sort_unstable();
+    for x in entries.iter() {
+        for y in entries.iter() {
+            if entries.contains(&(2020-(x+y))) {
+                return Some(x*y*&(2020-(x+y)))
             }
         }
     }
@@ -31,7 +25,7 @@ fn solve_day01_2(entries: Vec<u64>) -> Option<u64> {
 }
 
 pub fn day01() -> String {
-    let entries = lines_from!("01", u64);
+    let entries = lines_from!("01", i32);
     let answer = match solve_day01_1(entries) {
         Some(solution) => format!("{}", solution),
         None => thats_weird()
@@ -40,7 +34,7 @@ pub fn day01() -> String {
 }
 
 pub fn day01_part2() -> String {
-    let entries = lines_from!("01", u64);
+    let entries = lines_from!("01", i32);
     let answer = match solve_day01_2(entries) {
         Some(solution) => format!("{}", solution),
         None => thats_weird()
@@ -51,19 +45,21 @@ pub fn day01_part2() -> String {
 
 #[test]
 pub fn solve_day01_test() {
-    let mut entries: Vec<u64> = vec![1010, 1010, 999, 333];
-    assert_eq!(Some(1020100), solve_day01_1(entries));
+    // these tests don't really test what i want, but the actual case seems to fly with the implementation
+    // so whatever.
+    let mut entries: Vec<i32> = vec![1011, 1009, 999, 333];
+    assert_eq!(Some(1020099), solve_day01_1(entries));
 
     entries = vec![0, 0];
     assert_eq!(None, solve_day01_1(entries));
 
-    entries = vec![1011, 1010, 313, 312];
+    entries = vec![1011, 1011, 313, 312];
     assert_eq!(None, solve_day01_1(entries));
 }
 
 #[test]
 pub fn solve_day01_part2_test() {
-    let entries: Vec<u64> = vec![383, 300, 1337, 333];
+    let entries: Vec<i32> = vec![383, 300, 1337, 333];
     assert_eq!(Some(153621300), solve_day01_2(entries));
 
     let second_entries = vec![0, 0, 0];

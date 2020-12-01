@@ -8,6 +8,7 @@ pub enum Sorting {
 }
 
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
+    entries.sort_unstable();
     let mut seen: HashSet<i32> = HashSet::new();
     for x in entries.iter() {
         let y = 2020 - x;
@@ -20,66 +21,38 @@ fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
 }
 
 fn solve_day01_2(entries: &mut Vec<i32>) -> Option<i32> {
-    for i1 in 0..entries.len() {
-        let mut seen: HashSet<i32> = HashSet::new();
-        for i2 in i1+1..entries.len() {
-            let x = entries[i1];
-            let y = entries[i2];
-            let z = 2020 - x - y;
-            if seen.contains(&z) {
-                return Some(x * y * z)
+    entries.sort_unstable();
+    for (i, &x) in entries.iter().enumerate() {
+        let target = 2020 - x;
+        let mut l = i + 1;
+        let mut r = entries.len() - 1;
+        while l < r {
+            let sum = entries[l] + entries[r];
+            if sum > target {
+                r -= 1;
+            } else if sum < target {
+                l += 1;
+            } else {
+                return Some(x * entries[l] * entries[r])
             }
-            seen.insert(y);
         }
     }
     None
 }
 
-pub fn day01_1(mut entries: &mut Vec<i32>, sorting: Sorting) -> String {
-    let answer = match sorting {
-        Sorting::Unsorted => match solve_day01_1(&mut entries) {
-            Some(solution) => format!("{}", solution),
-            None => thats_weird()
-        },
-        Sorting::Ascending => {
-            entries.sort_unstable();
-            match solve_day01_1(&mut entries) {
-                Some(solution) => format!("{}", solution),
-               None => thats_weird()
-            }
-        },
-        Sorting::Descending => {
-            entries.sort_unstable_by(|a, b| b.cmp(a));
-            match solve_day01_1(&mut entries) {
-                Some(solution) => format!("{}", solution),
-                None => thats_weird()
-            }
-        }
+pub fn day01_1(mut entries: &mut Vec<i32>) -> String {
+    let answer = match solve_day01_1(&mut entries) {
+        Some(solution) => format!("{}", solution),
+        None => thats_weird()
     };
     format!("Day 1-1:  {}", answer)
 }
 
-pub fn day01_2(mut entries: &mut Vec<i32>, sorting: Sorting) -> String {
-    let answer = match sorting {
-        Sorting::Unsorted => match solve_day01_2(&mut entries) {
-            Some(solution) => format!("{}", solution),
-            None => thats_weird()
-        },
-        Sorting::Ascending => {
-            entries.sort_unstable();
-            match solve_day01_2(&mut entries) {
-                Some(solution) => format!("{}", solution),
-                None => thats_weird()
-            }
-        },
-        Sorting::Descending => {
-            entries.sort_unstable_by(|a, b| b.cmp(a));
-            match solve_day01_2(&mut entries) {
-                Some(solution) => format!("{}", solution),
-                None => thats_weird()
-            }
-        }
-    };
+pub fn day01_2(mut entries: &mut Vec<i32>) -> String {
+    let answer = match solve_day01_2(&mut entries) {
+        Some(solution) => format!("{}", solution),
+        None => thats_weird()
+    };    
     format!("Day 1-2:  {}", answer)
 
 }

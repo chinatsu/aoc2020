@@ -119,3 +119,10 @@ pub fn solve_day01_part2_test() {
     entries = vec![383, 300, 1337, 333];
     assert_eq!(Some(153621300), solve_day01_2(&mut entries));
 }
+
+#[test]
+pub fn regression() {
+    let mut entries = lines_from!("01", i32);
+    assert_eq!(Some(326211), solve_day01_1(&mut entries));
+    assert_eq!(Some(131347190), solve_day01_2(&mut entries));
+}

@@ -1,4 +1,5 @@
 use crate::utils::thats_weird;
+use std::collections::HashSet;
 
 pub enum Sorting {
     Unsorted,
@@ -7,33 +8,28 @@ pub enum Sorting {
 }
 
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
-    for (i, x) in entries.iter().enumerate() {
-        let mut relevant_entries = entries.clone();
-        relevant_entries.remove(i);
-        if relevant_entries.contains(&(2020 - x)) {
-            return Some(x * (2020 - x))
+    let mut seen: HashSet<i32> = HashSet::new();
+    for x in entries.iter() {
+        let y = 2020 - x;
+        if seen.contains(&y) {
+            return Some(x * y)
         }
+        seen.insert(*x);
     }
     None
 }
 
 fn solve_day01_2(entries: &mut Vec<i32>) -> Option<i32> {
-    for (i1, x) in entries.iter().enumerate() {
-        for (i2, y) in entries.iter().enumerate() {
-            if i1 == i2 {
-                continue
+    for i1 in 0..entries.len() {
+        let mut seen: HashSet<i32> = HashSet::new();
+        for i2 in i1+1..entries.len() {
+            let x = entries[i1];
+            let y = entries[i2];
+            let z = 2020 - x - y;
+            if seen.contains(&z) {
+                return Some(x * y * z)
             }
-            let mut relevant_entries = entries.clone();
-            if i1 > i2 {
-                relevant_entries.remove(i1);
-                relevant_entries.remove(i2);
-            } else {
-                relevant_entries.remove(i2);
-                relevant_entries.remove(i1);
-            }
-            if relevant_entries.contains(&(2020 - x - y)) {
-                return Some(x * y * (2020 - x - y))
-            }
+            seen.insert(y);
         }
     }
     None

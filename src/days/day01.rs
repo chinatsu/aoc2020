@@ -2,13 +2,15 @@ use crate::utils::thats_weird;
 use std::collections::HashSet;
 
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
-    let mut seen: HashSet<i32> = HashSet::new();
-    for x in entries.iter() {
-        let y = 2020 - x;
-        if seen.contains(&y) {
-            return Some(x * y)
+    for (i1, x) in entries.iter().enumerate() {
+        for (i2, y) in entries.iter().enumerate() {
+            if i1 == i2 {
+                continue
+            }
+            if x + y == 2020 {
+                return Some(x * y)
+            }
         }
-        seen.insert(*x);
     }
     None
 }

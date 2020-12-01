@@ -1,7 +1,11 @@
 #[macro_use] mod utils;
+mod days;
+use days::*;
 use utils::Result;
 
 fn main() -> Result<()> {
+    println!("{}", day01());
+    println!("{}", day01_part2());
     Ok(())
 }
 

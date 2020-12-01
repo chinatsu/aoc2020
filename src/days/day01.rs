@@ -1,7 +1,12 @@
 use crate::utils::thats_weird;
 
+pub enum Sorting {
+    Unsorted,
+    Descending,
+    Ascending,
+}
+
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
-    entries.sort_unstable_by(|a, b| b.cmp(a));
     for (i, x) in entries.iter().enumerate() {
         let mut relevant_entries = entries.clone();
         relevant_entries.remove(i);
@@ -13,7 +18,6 @@ fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
 }
 
 fn solve_day01_2(entries: &mut Vec<i32>) -> Option<i32> {
-    entries.sort_unstable();
     for (i1, x) in entries.iter().enumerate() {
         for (i2, y) in entries.iter().enumerate() {
             if i1 == i2 {
@@ -35,20 +39,52 @@ fn solve_day01_2(entries: &mut Vec<i32>) -> Option<i32> {
     None
 }
 
-pub fn day01_1() -> String {
+pub fn day01_1(sorting: Sorting) -> String {
     let mut entries = lines_from!("01", i32);
-    let answer = match solve_day01_1(&mut entries) {
-        Some(solution) => format!("{}", solution),
-        None => thats_weird()
+    let answer = match sorting {
+        Sorting::Unsorted => match solve_day01_1(&mut entries) {
+            Some(solution) => format!("{}", solution),
+            None => thats_weird()
+        },
+        Sorting::Ascending => {
+            entries.sort_unstable();
+            match solve_day01_1(&mut entries) {
+                Some(solution) => format!("{}", solution),
+               None => thats_weird()
+            }
+        },
+        Sorting::Descending => {
+            entries.sort_unstable_by(|a, b| b.cmp(a));
+            match solve_day01_1(&mut entries) {
+                Some(solution) => format!("{}", solution),
+                None => thats_weird()
+            }
+        }
     };
     format!("Day 1-1:  {}", answer)
 }
 
-pub fn day01_2() -> String {
+pub fn day01_2(sorting: Sorting) -> String {
     let mut entries = lines_from!("01", i32);
-    let answer = match solve_day01_2(&mut entries) {
-        Some(solution) => format!("{}", solution),
-        None => thats_weird()
+    let answer = match sorting {
+        Sorting::Unsorted => match solve_day01_2(&mut entries) {
+            Some(solution) => format!("{}", solution),
+            None => thats_weird()
+        },
+        Sorting::Ascending => {
+            entries.sort_unstable();
+            match solve_day01_2(&mut entries) {
+                Some(solution) => format!("{}", solution),
+                None => thats_weird()
+            }
+        },
+        Sorting::Descending => {
+            entries.sort_unstable_by(|a, b| b.cmp(a));
+            match solve_day01_2(&mut entries) {
+                Some(solution) => format!("{}", solution),
+                None => thats_weird()
+            }
+        }
     };
     format!("Day 1-2:  {}", answer)
 

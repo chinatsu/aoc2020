@@ -1,12 +1,6 @@
 use crate::utils::thats_weird;
 use std::collections::HashSet;
 
-pub enum Sorting {
-    Unsorted,
-    Descending,
-    Ascending,
-}
-
 fn solve_day01_1(entries: &mut Vec<i32>) -> Option<i32> {
     entries.sort_unstable();
     let mut seen: HashSet<i32> = HashSet::new();

@@ -1,13 +1,5 @@
 #[macro_use] mod utils;
-mod days;
-use days::*;
-use utils::Result;
-
-fn main() -> Result<()> {
-    println!("{}", day01());
-    println!("{}", day01_part2());
-    Ok(())
-}
+pub mod days;
 
 #[test]
 fn lines_from_test1_should_be_1_2_3() {

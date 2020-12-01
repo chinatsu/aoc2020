@@ -1,2 +1,2 @@
-pub mod day01;
-pub use day01::{day01, day01_part2};
+mod day01;
+pub use day01::{day01_1, day01_2};

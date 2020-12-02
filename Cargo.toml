@@ -18,9 +18,9 @@ path = "src/bin/main.rs"
 bench = false
 
 [[bench]]
-name = "day01"
+name = "day1"
 harness = false
 
 [[bench]]
-name = "day02"
+name = "day2"
 harness = false

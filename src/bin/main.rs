@@ -1,10 +1,10 @@
-use aoc2020::lines_from;
-use aoc2020::days::*;
+use aoc2020::days::{day1, day2};
 
 pub fn main() {
-    let mut entries = lines_from!("01", i32);
-    println!("{}", day01_1(&mut entries));
-    println!("{}", day01_2(&mut entries));
-    println!("{}", day02_1());
-    println!("{}", day02_2());
+    let mut input_1 = day1::parser::parse("input");
+    println!("{}", day1::one(&mut input_1));
+    println!("{}", day1::two(&mut input_1));
+    let input_2 = day2::parser::parse("input");
+    println!("{}", day2::one(&input_2));
+    println!("{}", day2::two(&input_2));
 }

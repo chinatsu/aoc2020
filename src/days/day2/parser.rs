@@ -1,21 +1,25 @@
 use std::io::BufRead;
-use regex::Regex;
 use super::Password;
 
 pub fn parse(filename: &str) -> Vec<Password> {
-    let re = Regex::new(r"^(\d+)-(\d+)\s(\w+):\s(.+)$").unwrap();
     let file = std::fs::File::open(format!("src/days/day2/resources/{}.txt", filename)).unwrap();
     let reader = std::io::BufReader::new(file);
-    reader.lines().filter(|val| val.as_ref().unwrap().len() > 2).map(|val| {
-        let line = val.unwrap().trim().to_string();
-        let captures = re.captures(&line).unwrap();
-        (
-            (&captures[1].parse::<usize>().unwrap()).to_owned(), 
-            (&captures[2].parse::<usize>().unwrap()).to_owned(), 
-            (&captures[3].parse::<char>().unwrap()).to_owned(), 
-            (&captures[4].to_string()).to_owned()
-        )
+    reader.lines().filter(|val| val.as_ref().unwrap().len() > 1).map(|val| {
+        process(val.unwrap())
     }).collect::<Vec<Password>>()
+}
+
+
+fn process(line: String) -> Password {
+    // friendship ended with regex, now spaghetti is my best friend
+    let mut splits = line.split(": ");
+    let rule = splits.nth(0).unwrap().to_string();
+    let password = splits.nth(0).unwrap().to_string();
+    let mut positions = rule.split("-");
+    let pos1: usize = positions.nth(0).unwrap().parse().unwrap();
+    let pos2: usize = positions.nth(0).unwrap().split(" ").nth(0).unwrap().parse().unwrap();
+    let target: char = rule.split(" ").nth(1).unwrap().chars().nth(0).unwrap();
+    (pos1, pos2, target, password)
 }
 
 #[test]

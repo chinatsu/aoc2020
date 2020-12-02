@@ -1,2 +1,2 @@
 #[macro_use] pub mod utils;
-pub mod days;
+#[macro_use] pub mod days;

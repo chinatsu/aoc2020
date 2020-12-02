@@ -5,4 +5,6 @@ pub fn main() {
     let mut entries = lines_from!("01", i32);
     println!("{}", day01_1(&mut entries));
     println!("{}", day01_2(&mut entries));
+    println!("{}", day02_1());
+    println!("{}", day02_2());
 }

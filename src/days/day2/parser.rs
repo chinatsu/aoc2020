@@ -16,7 +16,7 @@ fn process(line: String) -> Password {
     Password {
         pos1: line_iter.by_ref().take_while(|c| c != &'-').collect::<String>().parse().unwrap(),
         pos2: line_iter.by_ref().take_while(|c| c != &' ').collect::<String>().parse().unwrap(),
-        target: line_iter.by_ref().nth(0).unwrap(),
+        target: line_iter.by_ref().next().unwrap(),
         password: line_iter.skip(2).collect::<String>().to_string()
     }
 }

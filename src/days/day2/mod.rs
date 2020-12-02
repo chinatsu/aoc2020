@@ -3,24 +3,15 @@ pub mod parser;
 fn solve_one(entries: &Vec<Password>) -> u32 {
     entries.iter().fold(0, |count, pw| {
         let matches = pw.password.matches(pw.target).count();
-        if matches >= pw.pos1 && matches <= pw.pos2 {
-            count + 1
-        } else {
-            count
-        }
+        count + (matches >= pw.pos1 && matches <= pw.pos2) as u32
     })
 }
 
 fn solve_two(entries: &Vec<Password>) -> u32 {
     entries.iter().fold(0, |count, pw| {
-        let first = pw.password.chars().nth(pw.pos1-1).unwrap();
-        let second = pw.password.chars().nth(pw.pos2-1).unwrap();
-        if (first == pw.target && second == pw.target)
-        || (first != pw.target && second != pw.target) {
-            count
-        } else {
-            count + 1
-        }
+        let mut chars = pw.password.chars();
+        count + ((chars.by_ref().nth(pw.pos1-1).unwrap() == pw.target) 
+            ^ (chars.nth(pw.pos2-pw.pos1-1).unwrap() == pw.target)) as u32 
     })
 }
 

@@ -7,7 +7,10 @@ fn solve_one(field: &Field) -> u64 {
     let mut pos: (usize, usize) = (0, 0);
     while height > pos.0 {
         pos.0 += 1;
-        pos.1 = (pos.1 + 3) % width;
+        pos.1 += 3;
+        if pos.1 >= width {
+            pos.1 -= width;
+        }
         count += (field[pos.0][pos.1] == Terrain::Tree) as u64;
     }
     count
@@ -23,7 +26,10 @@ fn solve_two(field: &Field) -> u64 {
         let mut pos: (usize, usize) = (0, 0);
         while height > pos.0 {
             pos.0 += check.0;
-            pos.1 = (pos.1 + check.1) % width;
+            pos.1 += check.1;
+            if pos.1 >= width {
+                pos.1 -= width;
+            }
             inner_count += (field[pos.0][pos.1] == Terrain::Tree) as u64;
         }
         count *= inner_count;

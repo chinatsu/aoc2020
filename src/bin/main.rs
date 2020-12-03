@@ -1,4 +1,4 @@
-use aoc2020::days::{day1, day2};
+use aoc2020::days::{day1, day2, day3};
 
 pub fn main() {
     let mut input_1 = day1::parser::parse("input");
@@ -7,4 +7,7 @@ pub fn main() {
     let input_2 = day2::parser::parse("input");
     println!("{}", day2::one(&input_2));
     println!("{}", day2::two(&input_2));
+    let input_3 = day3::parser::parse("input");
+    println!("{}", day3::one(&input_3));
+    println!("{}", day3::two(&input_3));
 }

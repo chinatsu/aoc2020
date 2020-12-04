@@ -10,45 +10,44 @@ fn solve_two(input: &PassportQueue) -> u32 {
 
 #[derive(Debug, PartialEq)]
 pub struct Passport {
-    byr: Option<String>,
-    iyr: Option<String>,
-    eyr: Option<String>,
-    hgt: Option<String>,
-    hcl: Option<String>,
-    ecl: Option<String>,
-    pid: Option<String>,
-    cid: Option<String>
+    byr: String,
+    iyr: String,
+    eyr: String,
+    hgt: String,
+    hcl: String,
+    ecl: String,
+    pid: String,
+    cid: String
 }
 
 impl Passport {
     pub fn is_present(&self) -> bool {
-        self.byr.is_some() 
-        && self.iyr.is_some()
-        && self.eyr.is_some()
-        && self.hgt.is_some()
-        && self.hcl.is_some()
-        && self.ecl.is_some()
-        && self.pid.is_some()
+        self.byr.len() > 0
+        && self.iyr.len() > 0
+        && self.eyr.len() > 0
+        && self.hgt.len() > 0
+        && self.hcl.len() > 0
+        && self.ecl.len() > 0
+        && self.pid.len() > 0
     }
     pub fn is_valid(&self) -> bool {
         if !self.is_present() {
             return false
         }
-        let byr = self.byr.as_ref().unwrap().parse::<u32>().unwrap_or(0);
-        let iyr = self.iyr.as_ref().unwrap().parse::<u32>().unwrap_or(0);
-        let eyr = self.eyr.as_ref().unwrap().parse::<u32>().unwrap_or(0); 
-        let hgt = self.hgt.as_ref().unwrap();
-        let hcl = self.hcl.as_ref().unwrap();
-        let ecl = self.ecl.as_ref().unwrap();
-        let pid = self.pid.as_ref().unwrap();
+        let byr = self.byr.parse::<u32>().unwrap_or(0);
+        let iyr = self.iyr.parse::<u32>().unwrap_or(0);
+        let eyr = self.eyr.parse::<u32>().unwrap_or(0); 
 
         let valid_byr = byr >= 1920 && byr <= 2002;
         let valid_iyr = iyr >= 2010 && iyr <= 2020;
         let valid_eyr = eyr >= 2020 && eyr <= 2030;
-        let valid_hgt = valid_hgt(hgt);
-        let valid_hcl = hcl.len() == 7 && hcl.chars().next() == Some('#') && hcl.chars().skip(1).all(|c| c.is_digit(16));
-        let valid_ecl = vec!["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&ecl.as_str());
-        let valid_pid = pid.len() == 9 && pid.chars().all(|c| c.is_digit(10));
+        let valid_hgt = valid_hgt(&self.hgt);
+        
+        let mut hcl_chars = self.hcl.chars();
+        let valid_hcl = self.hcl.len() == 7 && hcl_chars.next() == Some('#') && hcl_chars.all(|c| c.is_digit(16));
+        
+        let valid_ecl = vec!["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&self.ecl.as_str());
+        let valid_pid = self.pid.len() == 9 && self.pid.chars().all(|c| c.is_digit(10));
         
         valid_byr && valid_iyr && valid_eyr && valid_hgt && valid_hcl && valid_ecl && valid_pid
     }

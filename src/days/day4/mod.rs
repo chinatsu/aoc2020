@@ -1,15 +1,15 @@
 pub mod parser;
 
-fn solve_one(input: &OuterType) -> u32 {
+fn solve_one(input: &PassportQueue) -> u32 {
     input.iter().fold(0, |count, pass| count + pass.is_present() as u32)
 }
 
-fn solve_two(input: &OuterType) -> u32 {
+fn solve_two(input: &PassportQueue) -> u32 {
     input.iter().fold(0, |count, pass| count + pass.is_valid() as u32)
 }
 
 #[derive(Debug, PartialEq)]
-pub struct InnerType {
+pub struct Passport {
     byr: Option<String>,
     iyr: Option<String>,
     eyr: Option<String>,
@@ -20,7 +20,7 @@ pub struct InnerType {
     cid: Option<String>
 }
 
-impl InnerType {
+impl Passport {
     pub fn is_present(&self) -> bool {
         self.byr.is_some() 
         && self.iyr.is_some()
@@ -143,15 +143,15 @@ impl InnerType {
     }
 }
 
-pub type OuterType = Vec<InnerType>;
+pub type PassportQueue = Vec<Passport>;
 
-pub fn one(input: &OuterType) -> String {
+pub fn one(input: &PassportQueue) -> String {
     let answer = solve_one(input);
     format!("Day 4-1:  {}", answer)
 }
 
 
-pub fn two(input: &OuterType) -> String {
+pub fn two(input: &PassportQueue) -> String {
     let answer = solve_two(input);
     format!("Day 4-2:  {}", answer)
 }

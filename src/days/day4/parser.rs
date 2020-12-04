@@ -1,7 +1,7 @@
-use super::{OuterType, InnerType};
+use super::{PassportQueue, Passport};
 use std::io::Read;
 
-pub fn parse(filename: &str) -> OuterType {
+pub fn parse(filename: &str) -> PassportQueue {
     let mut file = std::fs::File::open(format!("src/days/day4/resources/{}.txt", filename)).unwrap();
     let mut buffer = Vec::new();
     let mut stringbuffer: Vec<String> = Vec::new();
@@ -18,12 +18,12 @@ pub fn parse(filename: &str) -> OuterType {
     stringbuffer.push(cur_string);
     stringbuffer.iter().map(|val| {
         parse_entry(val)
-    }).collect::<OuterType>()
+    }).collect::<PassportQueue>()
 }
 
-fn parse_entry(entries: &String) -> InnerType {
+fn parse_entry(entries: &String) -> Passport {
     let entries = entries.split(' ').map(|v| v.split(':').collect()).collect::<Vec<Vec<&str>>>();
-    let mut ret = InnerType {
+    let mut ret = Passport {
         byr: None,
         iyr: None,
         eyr: None,

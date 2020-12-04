@@ -4,20 +4,18 @@ use std::io::BufRead;
 pub fn parse(filename: &str) -> PassportQueue {
     let file = std::fs::File::open(format!("src/days/day4/resources/{}.txt", filename)).unwrap();
     let reader = std::io::BufReader::new(file);
-    let mut buffer: Vec<String> = Vec::new();
+    let mut queue: PassportQueue = Vec::new();
     let mut entry: String = String::new();
     for val in reader.lines() {
         let line = val.unwrap();
         if line.len() == 0 {
-            buffer.push(entry);
+            queue.push(parse_entry(&entry));
             entry = String::new();
         }
         entry = format!("{} {}", entry, line);
     }
-    buffer.push(entry);
-    buffer.iter().map(|val| {
-        parse_entry(val)
-    }).collect::<PassportQueue>()
+    queue.push(parse_entry(&entry));
+    queue
 }
 
 fn parse_entry(entries: &String) -> Passport {

@@ -1,5 +1,7 @@
 pub mod parser;
 
+const ECLS: [&str; 7] = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
 fn solve_one(input: &PassportQueue) -> u32 {
     input.iter().fold(0, |count, pass| count + pass.is_present() as u32)
 }
@@ -16,8 +18,7 @@ pub struct Passport {
     hgt: String,
     hcl: String,
     ecl: String,
-    pid: String,
-    cid: String
+    pid: String
 }
 
 impl Passport {
@@ -30,6 +31,7 @@ impl Passport {
         && self.ecl.len() > 0
         && self.pid.len() > 0
     }
+
     pub fn is_valid(&self) -> bool {
         let byr = self.byr.parse::<u32>().unwrap_or(0);
         let iyr = self.iyr.parse::<u32>().unwrap_or(0);
@@ -43,7 +45,7 @@ impl Passport {
         let mut hcl_chars = self.hcl.chars();
         let valid_hcl = self.hcl.len() == 7 && hcl_chars.next() == Some('#') && hcl_chars.all(|c| c.is_digit(16));
         
-        let valid_ecl = vec!["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&self.ecl.as_str());
+        let valid_ecl = ECLS.contains(&self.ecl.as_str());
         let valid_pid = self.pid.len() == 9 && self.pid.chars().all(|c| c.is_digit(10));
         
         valid_byr && valid_iyr && valid_eyr && valid_hgt && valid_hcl && valid_ecl && valid_pid

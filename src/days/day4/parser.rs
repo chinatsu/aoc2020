@@ -29,8 +29,7 @@ fn parse_entry(entries: &String) -> Passport {
         hgt: String::new(),
         hcl: String::new(),
         ecl: String::new(),
-        pid: String::new(),
-        cid: String::new()
+        pid: String::new()
     };
     for entry in entries {
         match entry[0] {
@@ -41,7 +40,6 @@ fn parse_entry(entries: &String) -> Passport {
             "hcl" => { ret.hcl = entry[1].to_string() },
             "ecl" => { ret.ecl = entry[1].to_string() },
             "pid" => { ret.pid = entry[1].to_string() },
-            "cid" => { ret.cid = entry[1].to_string() },
             _ => {}
         }
     }

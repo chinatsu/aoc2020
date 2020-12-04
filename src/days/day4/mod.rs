@@ -31,116 +31,41 @@ impl Passport {
         && self.pid.is_some()
     }
     pub fn is_valid(&self) -> bool {
-        // maybe i should invite regex over for tea some time
-        if self.byr.is_some() {
-            let byr = self.byr.as_ref().unwrap();
-            if byr.len() != 4 {
-                
-                return false
-            }
-            match byr.parse::<u32>() {
-                Ok(v) => {
-                    if v < 1920 || v > 2002 {
-                        return false
-                    }
-                },
-                Err(_) => return false
-            }
-        } else {
+        if !self.is_present() {
             return false
         }
-        if self.iyr.is_some() {
-            let iyr = self.iyr.as_ref().unwrap();
-            if iyr.len() != 4 {
-                return false
-            }
-            match iyr.parse::<u32>() {
-                Ok(v) => {
-                    if v < 2010 || v > 2020 {
-                        return false         
-                    }
-                },
-                Err(_) => return false
-            }
-        } else {
-            return false
-        }
-        if self.eyr.is_some() {
-            let eyr = self.eyr.as_ref().unwrap();
-            if eyr.len() != 4 {
-            }
-            match eyr.parse::<u32>() {
-                Ok(v) => {
-                    if v < 2020 || v > 2030 {
-                        return false
-                    }
-                },
-                Err(_) => return false
-            }
-        } else {
-            return false
-        }
-        if self.hgt.is_some() {
-            let hgt = self.hgt.as_ref().unwrap();
-            if hgt.contains("in") {
-                let end = hgt.find("in").unwrap();
-                match &hgt[0..end].parse::<u32>() {
-                    Ok(v) => {
-                        if v < &59 || v > &76 {
-                            return false
-                        }
-                    }
-                    Err(_) => return false
-                }
-            } else if hgt.contains("cm") {
-                let end = hgt.find("cm").unwrap();
-                match &hgt[0..end].parse::<u32>() {
-                    Ok(v) => {
-                        if v < &150 || v > &193 {
-                            return false
-                        }
-                    }
-                    Err(_) => return false
-                }
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
-        if self.hcl.is_some() {
-            let hcl = self.hcl.as_ref().unwrap();
-            if hcl.len() != 7 {
-                return false
-            }
-            if hcl.chars().next() != Some('#') {
-                return false
-            } else if hcl.chars().skip(1).any(|c| !c.is_digit(16)) {
-                return false
-            }
-        } else {
-            return false
-        }
-        if self.ecl.is_some() {
-            if !vec!["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&self.ecl.as_ref().unwrap().as_str()) {
-                return false
-            }
-        } else {
-            return false
-        }
-        if self.pid.is_some() {
-            let pid = self.pid.as_ref().unwrap();
-            if pid.len() != 9 {
-                return false
-            }
-            if pid.chars().any(|c| !c.is_digit(10)) {
-                return false
-            }
-        } else {
-            return false
-        }
-        true
+        let byr = self.byr.as_ref().unwrap().parse::<u32>().unwrap_or(0);
+        let iyr = self.iyr.as_ref().unwrap().parse::<u32>().unwrap_or(0);
+        let eyr = self.eyr.as_ref().unwrap().parse::<u32>().unwrap_or(0); 
+        let hgt = self.hgt.as_ref().unwrap();
+        let hcl = self.hcl.as_ref().unwrap();
+        let ecl = self.ecl.as_ref().unwrap();
+        let pid = self.pid.as_ref().unwrap();
+
+        let valid_byr = byr >= 1920 && byr <= 2002;
+        let valid_iyr = iyr >= 2010 && iyr <= 2020;
+        let valid_eyr = eyr >= 2020 && eyr <= 2030;
+        let valid_hgt = valid_hgt(hgt);
+        let valid_hcl = hcl.len() == 7 && hcl.chars().next() == Some('#') && hcl.chars().skip(1).all(|c| c.is_digit(16));
+        let valid_ecl = vec!["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&ecl.as_str());
+        let valid_pid = pid.len() == 9 && pid.chars().all(|c| c.is_digit(10));
+        
+        valid_byr && valid_iyr && valid_eyr && valid_hgt && valid_hcl && valid_ecl && valid_pid
     }
+}
+
+fn valid_hgt(hgt: &String) -> bool {
+    let mut valid = false;
+    if hgt.contains("in") {
+        let end = hgt.find("in").unwrap();
+        let height = hgt[0..end].parse::<u32>().unwrap_or(0);
+        valid = height >= 59 && height <= 76;
+    } else if hgt.contains("cm") {
+        let end = hgt.find("cm").unwrap();
+        let height = hgt[0..end].parse::<u32>().unwrap_or(0);
+        valid = height >= 150 && height <= 193;
+    }
+    valid
 }
 
 pub type PassportQueue = Vec<Passport>;

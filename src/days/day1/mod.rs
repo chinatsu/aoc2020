@@ -1,5 +1,8 @@
 pub mod parser;
 
+pub const INPUT: &str = include_str!("resources/input.txt");
+pub const TEST: &str = include_str!("resources/test.txt");
+
 fn solve_one(entries: &mut Vec<i32>) -> Option<i32> {
     entries.sort_unstable();
     let mut l = 0;
@@ -86,7 +89,7 @@ pub fn solve_two_test() {
 
 #[test]
 pub fn regression() {
-    let mut entries = parser::parse("input");
+    let mut entries = parser::parse(INPUT);
     assert_eq!(Some(326211), solve_one(&mut entries));
     assert_eq!(Some(131347190), solve_two(&mut entries));
 }

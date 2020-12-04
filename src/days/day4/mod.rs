@@ -1,6 +1,9 @@
 pub mod parser;
 
 const ECLS: [&str; 7] = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+pub const INPUT: &str = include_str!("resources/input.txt");
+pub const TEST: &str = include_str!("resources/test.txt");
+
 
 fn solve_one(input: &PassportQueue) -> u32 {
     input.iter().fold(0, |count, pass| count + pass.is_present() as u32)
@@ -81,18 +84,18 @@ pub fn two(input: &PassportQueue) -> String {
 
 #[test]
 pub fn solve_one_test() {
-    assert_eq!(2, solve_one(&parser::parse("test")))
+    assert_eq!(2, solve_one(&parser::parse(TEST)))
 }
 
 
 #[test]
 pub fn solve_two_test() {
-    assert_eq!(2, solve_two(&parser::parse("test")))
+    assert_eq!(2, solve_two(&parser::parse(TEST)))
 }
 
 #[test]
 pub fn regression() {
-    let input = parser::parse("input");
+    let input = parser::parse(INPUT);
     assert_eq!(256, solve_one(&input));
     assert_eq!(198, solve_two(&input));
 }

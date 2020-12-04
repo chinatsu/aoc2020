@@ -1,5 +1,8 @@
 pub mod parser;
 
+pub const INPUT: &str = include_str!("resources/input.txt");
+pub const TEST: &str = include_str!("resources/test.txt");
+
 fn solve_one(entries: &Vec<Password>) -> u32 {
     entries.iter().fold(0, |count, pw| {
         let matches = pw.password.matches(pw.target).count();
@@ -35,7 +38,7 @@ pub struct Password {
 
 #[test]
 fn regression() {
-    let entries = parser::parse("input");
+    let entries = parser::parse(INPUT);
     assert_eq!(556, solve_one(&entries));
     assert_eq!(605, solve_two(&entries));
 }

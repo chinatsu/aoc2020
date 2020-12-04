@@ -1,5 +1,8 @@
 pub mod parser;
 
+pub const INPUT: &[u8] = include_bytes!("resources/input.txt");
+pub const TEST: &[u8] = include_bytes!("resources/test.txt");
+
 fn solve_one(field: &Field) -> u64 {
     let height = field.len() - 1;
     let width = field[0].len();
@@ -57,18 +60,18 @@ pub type Field = Vec<Vec<Terrain>>;
 
 #[test]
 pub fn solve_one_test() {
-    assert_eq!(7, solve_one(&parser::parse("test")))
+    assert_eq!(7, solve_one(&parser::parse(TEST)))
 }
 
 
 #[test]
 pub fn solve_two_test() {
-    assert_eq!(336, solve_two(&parser::parse("test")))
+    assert_eq!(336, solve_two(&parser::parse(TEST)))
 }
 
 #[test]
 pub fn regression() {
-    let entries = parser::parse("input");
+    let entries = parser::parse(INPUT);
     assert_eq!(164, solve_one(&entries));
     assert_eq!(5007658656, solve_two(&entries));
 }

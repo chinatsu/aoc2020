@@ -1,16 +1,13 @@
-use std::io::BufRead;
 use super::Password;
 
-pub fn parse(filename: &str) -> Vec<Password> {
-    let file = std::fs::File::open(format!("src/days/day2/resources/{}.txt", filename)).unwrap();
-    let reader = std::io::BufReader::new(file);
-    reader.lines().filter(|val| val.as_ref().unwrap().len() > 1).map(|val| {
-        process(val.unwrap())
+pub fn parse(content: &str) -> Vec<Password> {
+    content.lines().filter(|val| val.len() > 1).map(|val| {
+        process(val)
     }).collect::<Vec<Password>>()
 }
 
 
-fn process(line: String) -> Password {
+fn process(line: &str) -> Password {
     // friendship ended with regex, now spaghetti is my best friend
     let mut line_iter = line.chars();
     Password {
@@ -23,5 +20,6 @@ fn process(line: String) -> Password {
 
 #[test]
 fn parse_test() {
-    assert_eq!("abcde", parse("test")[0].password)
+    use super::TEST;
+    assert_eq!("abcde", parse(TEST)[0].password)
 }

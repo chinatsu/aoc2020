@@ -31,9 +31,6 @@ impl Passport {
         && self.pid.len() > 0
     }
     pub fn is_valid(&self) -> bool {
-        if !self.is_present() {
-            return false
-        }
         let byr = self.byr.parse::<u32>().unwrap_or(0);
         let iyr = self.iyr.parse::<u32>().unwrap_or(0);
         let eyr = self.eyr.parse::<u32>().unwrap_or(0); 

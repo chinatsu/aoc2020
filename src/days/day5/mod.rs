@@ -8,10 +8,11 @@ fn solve_one(input: &Vec<u32>) -> u32 {
 }
 
 fn solve_two(input: &Vec<u32>) -> u32 {
-    (input[0]..*input.last().unwrap())
-        .filter(|r| !input.contains(&r))
-        .next()
-        .unwrap()
+    let sum: u32 = input.iter().sum();
+    let i = input.len() as u32 + 1;
+    let l = solve_one(&input);
+    let r = input[0];
+    i * (l + r) / 2 - sum
 }
 
 pub fn one(input: &Vec<u32>) -> String {
@@ -34,7 +35,7 @@ pub fn solve_two_test() {
     // the spec says to find a seat between two occupied seats
     // but i figure if a plane is emptier like the case with the
     // test set it's fine to just get an unoccupied seat
-    assert_eq!(120, solve_two(&parser::parse(TEST)))
+    assert_eq!(484, solve_two(&parser::parse(TEST)))
 }
 
 #[test]

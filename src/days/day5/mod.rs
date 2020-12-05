@@ -4,15 +4,21 @@ pub const TEST: &[u8] = include_bytes!("resources/test.txt");
 pub const INPUT: &[u8] = include_bytes!("resources/input.txt");
 
 fn solve_one(input: &Vec<u32>) -> u32 {
-    *input.last().unwrap()
+    *input.iter().max().unwrap()
 }
 
 fn solve_two(input: &Vec<u32>) -> u32 {
-    let sum: u32 = input.iter().sum();
-    let i = input.len() as u32 + 1;
-    let l = solve_one(&input);
-    let r = input[0];
-    i * (l + r) / 2 - sum
+    let i: u32 = input.len() as u32 + 1;
+    let mut sum: u32 = 0;
+    let mut low = u32::MAX;
+    for pass in input {
+        if low > *pass {
+            low = *pass;
+        }
+        sum += pass;
+    }
+    let high = low + i - 1;
+    i * (low + high) / 2 - sum
 }
 
 pub fn one(input: &Vec<u32>) -> String {
@@ -23,19 +29,6 @@ pub fn one(input: &Vec<u32>) -> String {
 pub fn two(input: &Vec<u32>) -> String {
     let answer = solve_two(input);
     format!("Day 5-2:  {}", answer)
-}
-
-#[test]
-pub fn solve_one_test() {
-    assert_eq!(820, solve_one(&parser::parse(TEST)))
-}
-
-#[test]
-pub fn solve_two_test() {
-    // the spec says to find a seat between two occupied seats
-    // but i figure if a plane is emptier like the case with the
-    // test set it's fine to just get an unoccupied seat
-    assert_eq!(484, solve_two(&parser::parse(TEST)))
 }
 
 #[test]

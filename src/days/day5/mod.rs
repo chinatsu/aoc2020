@@ -4,7 +4,7 @@ pub const TEST: &[u8] = include_bytes!("resources/test.txt");
 pub const INPUT: &[u8] = include_bytes!("resources/input.txt");
 
 fn solve_one(input: &Vec<u32>) -> u32 {
-    input.iter().fold(0, |champion, challenger| std::cmp::max(*challenger, champion))
+    *input.iter().max().unwrap()
 }
 
 fn solve_two(input: &Vec<u32>) -> Option<u32> {

@@ -7,10 +7,11 @@ fn solve_one(input: &Vec<u32>) -> u32 {
     *input.iter().max().unwrap()
 }
 
-fn solve_two(input: &Vec<u32>) -> Option<u32> {
+fn solve_two(input: &Vec<u32>) -> u32 {
     (*input.iter().min().unwrap()..*input.iter().max().unwrap())
-        .filter(|r| !input.contains(&r) && input.contains(&(r-1)) && input.contains(&(r+1)))
+        .filter(|r| !input.contains(&r))
         .next()
+        .unwrap()
 }
 
 pub fn one(input: &Vec<u32>) -> String {
@@ -20,10 +21,7 @@ pub fn one(input: &Vec<u32>) -> String {
 
 pub fn two(input: &Vec<u32>) -> String {
     let answer = solve_two(input);
-    match answer {
-        Some(a) => format!("Day 5-2:  {}", a),
-        None => String::from("Day 5-2:  Something's off..")
-    }
+    format!("Day 5-2:  {}", answer)
 }
 
 #[test]
@@ -33,12 +31,15 @@ pub fn solve_one_test() {
 
 #[test]
 pub fn solve_two_test() {
-    assert_eq!(None, solve_two(&parser::parse(TEST)))
+    // the spec says to find a seat between two occupied seats
+    // but i figure if a plane is emptier like the case with the
+    // test set it's fine to just get an unoccupied seat
+    assert_eq!(120, solve_two(&parser::parse(TEST)))
 }
 
 #[test]
 pub fn regression() {
     let input = parser::parse(INPUT);
     assert_eq!(989, solve_one(&input));
-    assert_eq!(Some(548), solve_two(&input));
+    assert_eq!(548, solve_two(&input));
 }

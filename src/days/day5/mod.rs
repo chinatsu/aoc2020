@@ -16,7 +16,7 @@ fn solve_one(input: &Vec<BoardingPass>) -> u32 {
 fn solve_two(input: &Vec<BoardingPass>) -> u32 {
     let ids: Vec<u32> = input.iter().map(|pass| pass.seat_id).collect();
     let mut first_seat_encountered = false;
-    for r in 0..=1024 {
+    for r in 0..=8096 {
         if ids.contains(&r) {
             if !first_seat_encountered {
                 first_seat_encountered = true;

@@ -4,11 +4,11 @@ pub const TEST: &[u8] = include_bytes!("resources/test.txt");
 pub const INPUT: &[u8] = include_bytes!("resources/input.txt");
 
 fn solve_one(input: &Vec<u32>) -> u32 {
-    *input.iter().max().unwrap()
+    *input.last().unwrap()
 }
 
 fn solve_two(input: &Vec<u32>) -> u32 {
-    (*input.iter().min().unwrap()..*input.iter().max().unwrap())
+    (input[0]..*input.last().unwrap())
         .filter(|r| !input.contains(&r))
         .next()
         .unwrap()

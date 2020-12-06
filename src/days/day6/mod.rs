@@ -3,27 +3,21 @@ pub mod parser;
 pub const TEST: &str = include_str!("resources/test.txt");
 pub const INPUT: &str = include_str!("resources/input.txt");
 
-fn solve_one(input: &Vec<Vec<&str>>) -> usize {
-    input.iter().fold(0, |acc, group| {
-        acc + char_set(group).len()
-    })
+fn solve_one(input: &Vec<Vec<&str>>) -> u32 {
+    input.iter()
+        .map(solve)
+        .fold(0, |acc, group| acc + group.iter().fold(0, |acc, v| acc | v).count_ones())
 }
 
 fn solve_two(input: &Vec<Vec<&str>>) -> u32 {
-    input.iter().map(|group| {
-        char_set(group)
-            .iter()
-            .fold(0, |acc, c| acc + group
-                .iter()
-                .all(|person| person.contains(&c.to_string())) as u32)
-    }).sum()
+    input.iter()
+        .map(solve)
+        .fold(0, |acc, group| acc + group.iter().fold(u32::MAX, |acc, v| acc & v).count_ones())
 }
 
-fn char_set(input: &Vec<&str>) -> Vec<char> {
-    let mut ret: Vec<char> = input.join("").chars().collect();
-    ret.sort();
-    ret.dedup();
-    ret
+fn solve(group: &Vec<&str>) -> Vec<u32> {
+    group.iter()
+        .map(|line| line.bytes().fold(0, |acc, c| acc | (1 << (c - 97)))).collect()
 }
 
 pub fn one(input: &Vec<Vec<&str>>) -> String {

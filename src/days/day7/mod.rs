@@ -19,8 +19,12 @@ fn solve_two(input: &Tree) -> u32 {
 
 fn recursion_one(input: &Tree, target: String) -> Vec<String> {
     let targets: Vec<String> = input.iter().filter(|(_, bags)| {
-        let colors: Vec<String> = bags.iter().map(|(_, n)| n.clone()).collect();
-        return colors.contains(&target)
+        for bag in bags.iter() {
+            if bag.1 == target {
+                return true
+            }
+        }
+        false
     }).map(|(name, _)| name.clone()).collect();
     if targets.len() == 0 { 
         return Vec::new()

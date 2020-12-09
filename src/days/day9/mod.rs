@@ -6,9 +6,9 @@ pub const TEST: &str = include_str!("resources/test.txt");
 pub type Parsed = Vec<u64>;
 pub type Answer = u64;
 
-fn solve_one(input: &Parsed, window: usize) -> Answer {
-    for (i, n) in input.iter().enumerate().skip(window) {
-        let prev = &input[(i - window)..i];
+fn solve_one(input: &Parsed, preamble_size: usize) -> Answer {
+    for (i, n) in input.iter().enumerate().skip(preamble_size) {
+        let prev = &input[(i - preamble_size)..i];
         if !prev.iter()
             .filter(|x| x <= &n)
             .map(|x| n - x)
@@ -19,8 +19,8 @@ fn solve_one(input: &Parsed, window: usize) -> Answer {
     0
 }
 
-fn solve_two(input: &Parsed, window: usize) -> Answer {
-    let target = solve_one(&input, window);
+fn solve_two(input: &Parsed, preamble_size: usize) -> Answer {
+    let target = solve_one(&input, preamble_size);
     for n in 2..usize::MAX {
         if let Some(answer) = input.windows(n).find(|set| set.iter().sum::<u64>() == target) {
             return answer.iter().min().unwrap() + answer.iter().max().unwrap();

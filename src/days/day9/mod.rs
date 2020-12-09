@@ -6,7 +6,7 @@ pub const TEST: &str = include_str!("resources/test.txt");
 pub type Parsed = Vec<u64>;
 pub type Answer = u64;
 
-fn solve_one(input: &Parsed, preamble_size: usize) -> Answer {
+pub fn solve_one(input: &Parsed, preamble_size: usize) -> Answer {
     for (i, n) in input.iter().enumerate().skip(preamble_size) {
         let prev = &input[(i - preamble_size)..i];
         if !prev.iter()
@@ -19,23 +19,29 @@ fn solve_one(input: &Parsed, preamble_size: usize) -> Answer {
     0
 }
 
-fn solve_two(input: &Parsed, preamble_size: usize) -> Answer {
-    let target = solve_one(&input, preamble_size);
-    for n in 2..usize::MAX {
-        if let Some(answer) = input.windows(n).find(|set| set.iter().sum::<u64>() == target) {
-            return answer.iter().min().unwrap() + answer.iter().max().unwrap();
+pub fn solve_two(input: &Parsed, target: u64) -> Answer {
+    let mut left = 0;
+    let mut right = 0;
+    let mut sum = input[0];
+    loop {
+        if sum < target {
+            right += 1;
+            sum += input[right];
+        } else if sum > target {
+            sum -= input[left];
+            left += 1;
+        } else {
+            let window = &input[left..right];
+            return window.iter().min().unwrap() + window.iter().max().unwrap();
         }
     }
-    0
 }
 
-pub fn one(input: &Parsed) -> String {
-    let answer = solve_one(input, 25);
+pub fn one(answer: u64) -> String {
     format!("Day 9-1:  {}", answer)
 }
 
-pub fn two(input: &Parsed) -> String {
-    let answer = solve_two(input, 25);
+pub fn two(answer: u64) -> String {
     format!("Day 9-2:  {}", answer)
 }
 
@@ -47,12 +53,14 @@ pub fn solve_one_test() {
 
 #[test]
 pub fn solve_two_test() {
-     assert_eq!(62, solve_two(&parser::parse(TEST), 5))
+    let target = solve_one(&parser::parse(TEST), 5);
+    assert_eq!(62, solve_two(&parser::parse(TEST), target))
 }
 
 #[test]
 pub fn regression() {
     let input = parser::parse(INPUT);
-    assert_eq!(776203571, solve_one(&input, 25));
-    assert_eq!(104800569, solve_two(&input, 25));
+    let target = solve_one(&input, 25);
+    assert_eq!(776203571, target);
+    assert_eq!(104800569, solve_two(&input, target));
 }

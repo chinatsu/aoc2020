@@ -28,8 +28,10 @@ pub fn main() -> String {
     res = format!("{}{}\n", res, day8::one(&input_8));
     res = format!("{}{}\n", res, day8::two(&input_8));
     let input_9 = day9::parser::parse(day9::INPUT);
-    res = format!("{}{}\n", res, day9::one(&input_9));
-    res = format!("{}{}\n", res, day9::two(&input_9));
+    let answer_day9_1 = day9::solve_one(&input_9, 25);
+    let answer_day9_2 = day9::solve_two(&input_9, answer_day9_1);
+    res = format!("{}{}\n", res, day9::one(answer_day9_1));
+    res = format!("{}{}\n", res, day9::two(answer_day9_2));
 
     res
 }

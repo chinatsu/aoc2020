@@ -1,6 +1,6 @@
 #![feature(str_split_once)]
 #[macro_use] pub mod days;
-use days::{day1, day2, day3, day4, day5, day6, day7, day8};
+use days::{day1, day2, day3, day4, day5, day6, day7, day8, day9};
 
 pub fn main() -> String {
     let mut input_1 = day1::parser::parse(day1::INPUT);
@@ -27,6 +27,9 @@ pub fn main() -> String {
     let input_8 = day8::parser::parse(day8::INPUT);
     res = format!("{}{}\n", res, day8::one(&input_8));
     res = format!("{}{}\n", res, day8::two(&input_8));
-    
+    let input_9 = day9::parser::parse(day9::INPUT);
+    res = format!("{}{}\n", res, day9::one(&input_9));
+    res = format!("{}{}\n", res, day9::two(&input_9));
+
     res
 }

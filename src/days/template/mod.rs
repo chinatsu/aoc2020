@@ -16,12 +16,12 @@ fn solve_two(input: &Parsed) -> Answer {
 
 pub fn one(input: &Parsed) -> String {
     let answer = solve_one(input);
-    format!("x-1:  {}", answer)
+    format!("Day x-1: {}", answer)
 }
 
 pub fn two(input: &Parsed) -> String {
     let answer = solve_two(input);
-    format!("x-2:  {}", answer)
+    format!("Day x-2: {}", answer)
 }
 
 #[test]

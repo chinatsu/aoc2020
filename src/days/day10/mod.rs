@@ -21,7 +21,7 @@ fn solve_one(input: &Parsed) -> Answer {
 fn solve_two(input: &Parsed) -> Answer {
     let mut paths = vec![0u64; input.len()];
     paths[0] = 1;
-    for i in 0..input.len() {
+    for i in 0..input.len()-1 {
         let x = input[i];
         let path = paths[i];
 
@@ -33,7 +33,7 @@ fn solve_two(input: &Parsed) -> Answer {
             }
         }
     }
-    *paths.last().unwrap() / 2 // idk lol
+    *paths.last().unwrap()
 }
 
 pub fn one(input: &Parsed) -> String {

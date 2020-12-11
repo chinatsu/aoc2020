@@ -1,7 +1,7 @@
 pub mod parser;
 
-const INPUT: &str = include_str!("resources/input.txt");
-const TEST: &str = include_str!("resources/test.txt");
+pub const INPUT: &str = include_str!("resources/input.txt");
+pub const TEST: &str = include_str!("resources/test.txt");
 
 pub type Parsed = Vec<String>;
 pub type Answer = u32;

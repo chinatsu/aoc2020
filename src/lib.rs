@@ -39,8 +39,7 @@ pub fn main() -> String {
     res = format!("{}{}\n", res, day11::one(&input_11));
     res = format!("{}{}\n", res, day11::two(&input_11));
     let input_12 = day12::parser::parse(day12::INPUT);
-    res = format!("{}{}\n", res, day12::one(&input_12));
-    res = format!("{}{}\n", res, day12::two(&input_12));
-
+    res = format!("{}{}\n", res, day12::day(&input_12));
+    
     res
 }
